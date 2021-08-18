@@ -1,4 +1,5 @@
 class Article < ActiveRecord::Base
+  include Visible
   has_many :comments
 
   validates :title, presence: true
