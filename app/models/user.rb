@@ -1,4 +1,10 @@
 class User < ActiveRecord::Base
+  #callbacks
+  before_validation :normalize_name, on: :create
+
+  after_validation :set_location, on: [:create, :update]
+
+
   #requires that a name is set when saving a user to the database
   validates :name, presence: true
 
@@ -46,4 +52,13 @@ class User < ActiveRecord::Base
 
   #deletes all the users
   User.destroy_all
+
+  private
+    def normalize_name
+      self.name = name.downcase.titleize
+    end
+
+    def set_location
+      self.location = LocationService.query(self)
+    end
 end
