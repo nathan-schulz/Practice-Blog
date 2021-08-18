@@ -1,4 +1,4 @@
-class User < ApplicationRecord
+class User < ActiveRecord::Base
   #requires that a name is set when saving a user to the database
   validates :name, presence: true
 
