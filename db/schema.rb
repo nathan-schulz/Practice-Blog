@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_18_163902) do
+ActiveRecord::Schema.define(version: 2021_08_19_231946) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -18,6 +18,26 @@ ActiveRecord::Schema.define(version: 2021_08_18_163902) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status"
+  end
+
+  create_table "authors", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.integer "book_id"
+    t.integer "books_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["books_id"], name: "index_authors_on_books_id"
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.string "title"
+    t.boolean "out_of_print"
+    t.integer "isbn"
+    t.date "year_published"
+    t.text "reviews"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -30,9 +50,24 @@ ActiveRecord::Schema.define(version: 2021_08_18_163902) do
     t.index ["article_id"], name: "index_comments_on_article_id"
   end
 
+  create_table "customers", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.integer "orders_count"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "customers_products", id: false, force: :cascade do |t|
     t.integer "customer_id", null: false
     t.integer "product_id", null: false
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.date "ordered_date"
+    t.decimal "total_price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "products", force: :cascade do |t|
